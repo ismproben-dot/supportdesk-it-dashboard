@@ -1,0 +1,10 @@
+PRAGMA foreign_keys=ON;
+CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY,name TEXT NOT NULL,email TEXT NOT NULL UNIQUE,password TEXT NOT NULL,role TEXT NOT NULL CHECK(role IN ('admin','agent','requester')));
+CREATE TABLE IF NOT EXISTS sessions(token TEXT PRIMARY KEY,user_id INTEGER NOT NULL REFERENCES users(id),csrf TEXT NOT NULL,expires REAL NOT NULL);
+CREATE TABLE IF NOT EXISTS assets(id INTEGER PRIMARY KEY,tag TEXT NOT NULL UNIQUE,name TEXT NOT NULL,department TEXT NOT NULL,state TEXT NOT NULL CHECK(state IN ('Active','Maintenance','Retired')));
+CREATE TABLE IF NOT EXISTS tickets(id INTEGER PRIMARY KEY,title TEXT NOT NULL,description TEXT NOT NULL,priority TEXT NOT NULL CHECK(priority IN ('Low','Medium','High','Critical')),status TEXT NOT NULL DEFAULT 'Open' CHECK(status IN ('Open','In Progress','Resolved')),requester_id INTEGER NOT NULL REFERENCES users(id),assignee_id INTEGER REFERENCES users(id),asset_id INTEGER REFERENCES assets(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL,due_at TEXT NOT NULL,resolved_at TEXT,version INTEGER NOT NULL DEFAULT 1);
+CREATE TABLE IF NOT EXISTS comments(id INTEGER PRIMARY KEY,ticket_id INTEGER NOT NULL REFERENCES tickets(id),user_id INTEGER NOT NULL REFERENCES users(id),body TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS audit(id INTEGER PRIMARY KEY,ticket_id INTEGER NOT NULL REFERENCES tickets(id),user_id INTEGER NOT NULL REFERENCES users(id),action TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS ticket_status ON tickets(status);
+CREATE INDEX IF NOT EXISTS ticket_requester ON tickets(requester_id);
+CREATE INDEX IF NOT EXISTS comment_ticket ON comments(ticket_id);

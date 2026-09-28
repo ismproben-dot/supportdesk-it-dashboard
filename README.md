@@ -57,3 +57,16 @@ Created with AI assistance as a portfolio learning project. Review and understan
 ## Verification
 
 Run `node tests/smoke.cjs` (Node.js 18+). Dependency-free checks cover ticket creation, text escaping, combined filtering, status persistence, asset creation, duplicate tags, CSV formula protection and malformed stored data. These use a minimal DOM harness and do not replace browser or accessibility testing. Automated visual browser verification was unavailable in the build environment.
+
+
+## Larger full-stack project: OpsDesk Pro
+
+Explore **[OpsDesk Pro](opsdesk-pro/README.md)**, the Python + SQLite application in this repository. It adds authenticated sessions, requester/agent roles, ticket assignment, equipment linking, comments, activity history, concurrency checks, resolution targets and analytics.
+
+```sh
+cd opsdesk-pro
+python seed_demo.py
+python server.py
+```
+
+Use the randomly generated credentials printed by setup, then open http://127.0.0.1:8000. This backend runs locally; the static application above can still run separately on GitHub Pages.
