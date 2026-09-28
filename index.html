@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IT Helpdesk and Asset Management dashboard by Ismail Bentayeb." />
+  <title>SupportDesk | IT Helpdesk Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">SD</div>
+        <div>
+          <strong>SupportDesk</strong>
+          <span>IT Operations</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-view="dashboard">Dashboard</button>
+        <button class="nav-item" data-view="tickets">Tickets</button>
+        <button class="nav-item" data-view="assets">Assets</button>
+        <button class="nav-item" data-view="knowledge">Knowledge Base</button>
+      </nav>
+
+      <div class="profile-card">
+        <div class="avatar">IB</div>
+        <div>
+          <strong>Ismail Bentayeb</strong>
+          <span>IT Technician</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">IT SERVICE MANAGEMENT</p>
+          <h1 id="pageTitle">Operations Dashboard</h1>
+        </div>
+        <button id="newTicketBtn" class="primary-btn">+ New Ticket</button>
+      </header>
+
+      <p class="demo-note">Portfolio demo · Fictional sample data · Changes saved in this browser</p><p id="notice" role="status"></p>
+      <section id="dashboardView" class="view active-view">
+        <div class="stats-grid">
+          <article class="stat-card"><span>Open tickets</span><strong id="openCount">0</strong><small>Needs attention</small></article>
+          <article class="stat-card"><span>Resolved</span><strong id="resolvedCount">0</strong><small>Completed requests</small></article>
+          <article class="stat-card"><span>Critical</span><strong id="criticalCount">0</strong><small>High-priority issues</small></article>
+          <article class="stat-card"><span>Managed assets</span><strong id="assetCount">0</strong><small>Tracked equipment</small></article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="panel-head"><div><p class="eyebrow">SERVICE DESK</p><h2>Recent tickets</h2></div><button class="text-btn" data-go="tickets">View all</button></div>
+            <div id="recentTickets" class="ticket-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head"><div><p class="eyebrow">SAMPLE SYSTEM HEALTH</p><h2>Infrastructure</h2></div></div>
+            <div class="health-item"><div><strong>Network</strong><span>Demo office LAN</span></div><span class="status good">Operational</span></div>
+            <div class="health-item"><div><strong>Workstations</strong><span>User devices</span></div><span class="status good">98% online</span></div>
+            <div class="health-item"><div><strong>Backup</strong><span>Last sync</span></div><span class="status warning">2h ago</span></div>
+            <div class="health-item"><div><strong>Security</strong><span>Endpoint protection</span></div><span class="status good">Protected</span></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="ticketsView" class="view">
+        <section class="panel">
+          <div class="toolbar">
+            <input aria-label="Search tickets" id="ticketSearch" type="search" placeholder="Search tickets..." />
+            <select aria-label="Filter by status" id="ticketFilter">
+              <option value="all">All statuses</option>
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select><button id="exportBtn" class="text-btn">Export CSV</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Issue</th><th>User</th><th>Priority</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="ticketTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="assetsView" class="view">
+        <section class="panel">
+          <div class="panel-head"><div><p class="eyebrow">ASSET INVENTORY</p><h2>Managed equipment</h2></div><button id="newAssetBtn" class="primary-btn">+ Add asset</button></div>
+          <div id="assetGrid" class="asset-grid"></div>
+        </section>
+      </section>
+
+      <section id="knowledgeView" class="view">
+        <div class="knowledge-grid">
+          <article class="kb-card"><span>01</span><h3>Network troubleshooting</h3><p>Quick workflow for diagnosing local connectivity, DNS and gateway issues.</p><details><summary>View checklist</summary><ol><li>Check the cable or Wi-Fi connection and whether other users are affected.</li><li>Check the assigned IP address and default gateway.</li><li>Test gateway reachability, then DNS resolution. Document results and escalate if needed.</li></ol></details></article>
+          <article class="kb-card"><span>02</span><h3>Windows workstation setup</h3><p>Checklist for configuring user accounts, security, updates and office tools.</p><details><summary>View checklist</summary><ol><li>Confirm the approved device and user account.</li><li>Install approved updates and applications.</li><li>Verify endpoint protection, backup policy and least-privilege access.</li></ol></details></article>
+          <article class="kb-card"><span>03</span><h3>Printer support</h3><p>Common steps for queues, drivers, IP configuration and spooler problems.</p><details><summary>View checklist</summary><ol><li>Confirm power, paper and any device error.</li><li>Verify connectivity and the selected printer.</li><li>Inspect the queue and approved driver; record the fix in the ticket.</li></ol></details></article>
+          <article class="kb-card"><span>04</span><h3>User account recovery</h3><p>Safe reset workflow with identity verification and access restoration.</p><details><summary>View checklist</summary><ol><li>Verify the requester using the organization’s approved process.</li><li>Use the authorized account recovery workflow; never ask for an existing password.</li><li>Confirm access and record the resolution without storing credentials.</li></ol></details></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="ticketModal" aria-labelledby="ticketHeading">
+    <div class="modal-card">
+      <div class="modal-head"><h2 id="ticketHeading">Create support ticket</h2><button aria-label="Close ticket form" id="closeModal" class="icon-btn">×</button></div>
+      <form id="ticketForm">
+        <label>Issue title<input name="title" maxlength="160" required placeholder="e.g. Printer not responding" /></label>
+        <label>Requester<input name="user" maxlength="100" required placeholder="e.g. Finance Department" /></label>
+        <div class="form-row">
+          <label>Priority<select name="priority"><option>Low</option><option selected>Medium</option><option>High</option><option>Critical</option></select></label>
+          <label>Status<select name="status"><option selected>Open</option><option>In Progress</option><option>Resolved</option></select></label>
+        </div>
+        <button class="primary-btn full" type="submit">Create ticket</button>
+      </form>
+    </div>
+  </dialog>
+  <dialog id="assetModal" aria-labelledby="assetHeading"><div class="modal-card"><div class="modal-head"><h2 id="assetHeading">Add equipment</h2><button id="closeAsset" class="icon-btn" aria-label="Close asset form">×</button></div><form id="assetForm"><label>Device name<input name="name" required maxlength="100"></label><label>Asset tag<input name="tag" required maxlength="40"></label><label>Department<input name="owner" required maxlength="100"></label><label>State<select name="state"><option>Active</option><option>Maintenance</option><option>Retired</option></select></label><button class="primary-btn" type="submit">Save asset</button></form></div></dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
