@@ -1,6 +1,6 @@
 # SupportDesk
 
-A responsive IT helpdesk portfolio app for **Ismail Bentayeb**, connecting practical IT support workflows with application development and Business Intelligence.
+A responsive IT helpdesk portfolio app , connecting practical IT support workflows with application development and Business Intelligence.
 
 ## Features
 
